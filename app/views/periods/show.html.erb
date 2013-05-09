@@ -2,32 +2,32 @@
 
 <p>
   <b>Employee:</b>
-  <%= @period.employee.firstname %>
+  <%= @period.employee.firstname if @period.employee %>
 </p>
 
 <p>
   <b>Job:</b>
-  <%= @period.job.name %>
+  <%= @period.job.name if @period.job %>
 </p>
 
 <p>
   <b>Punch in:</b>
-  <%= @period.punch_in.punchtime %>
+  <%= @period.punch_in.punchtime if @period.punch_in %>
 </p>
 
 <p>
   <b>Punch in log:</b>
-  <%= @period.punch_in.log %>
+  <%= @period.punch_in.log if @period.punch_in %>
 </p>
 
 <p>
   <b>Punch out:</b>
-  <%= @period.punch_out.punchtime %>
+  <%= @period.punch_out.punchtime if @period.punch_out %>
 </p>
 
 <p>
   <b>Punch out log:</b>
-  <%= @period.punch_out.log %>
+  <%= @period.punch_out.log if @period.punch_out %>
 </p>
 
 <p>

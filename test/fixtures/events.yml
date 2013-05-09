@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  user: 
-  type: 
-  punchtime: 1
+  employee_id: 
+  punch_type: 
+  punchtime: <%= 1.days.ago %>
   log: MyText
 
 two:
-  user: 
-  type: 
-  punchtime: 1
+  employee_id: 
+  punch_type: 
+  punchtime: <%= 1.days.ago %>
   log: MyText

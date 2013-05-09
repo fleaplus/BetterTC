@@ -2,12 +2,12 @@
 
 <p>
   <b>User:</b>
-  <%= @event.employee.firstname %> <%= @event.employee.lastname %>
+  <%= @event.employee.firstname if @event.employee %> <%= @event.employee.lastname if @event.employee %>
 </p>
 
 <p>
   <b>Job:</b>
-  <%= @event.job.name %>
+  <%= @event.job.name if @event.job %>
 </p>
 
 <p>

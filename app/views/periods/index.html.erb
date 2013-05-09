@@ -18,16 +18,7 @@
   </div>
 <div class="span2">
     <%= label "dateRange", "Date Range" %>
-  <select id="dateRange" class="span2">
-    <option value="custom">Custom</option>
-    <option value="today" startdate="<%= Date.today.to_date %>" enddate="<%= 1.day.from_now.to_date %>">Today</option>
-    <option value="lastWeek" startdate="<%= 7.days.ago.beginning_of_week.to_date %>" enddate="<%= Date.today.beginning_of_week %>">Last Week</option>
-    <option value="thisWeek" startdate="<%= Date.today.beginning_of_week %>" enddate="<%= Date.today.end_of_week %>" selected="selected">This Week</option>
-    <option value="lastMonth" startdate="<%= 1.month.ago.beginning_of_month.to_date %>" enddate="<%= Date.today.beginning_of_month %>">Last Month</option>
-    <option value="thisMonth" startdate="<%= Date.today.beginning_of_month %>" enddate="<%= Date.today.end_of_month %>">This Month</option>
-    <option value="thisYear" startdate="<%= Date.today.beginning_of_year %>" enddate="<%= Date.today.end_of_year %>">This Year</option>
-    <option value="thisYear" startdate="<%= 1.year.ago.beginning_of_year %>" enddate="<%= 1.year.ago.end_of_year %>">Last Year</option>
-  </select>
+    <%= select_tag :dateRange, options_for_select([['Custom', 'custom'], ['Today', 'today'], ['Last Week', 'lastWeek'], ['This Week', 'thisWeek'], ['Last Month', 'lastMonth'], ['This Month', 'thisMonth'], ['This Year', 'thisYear'], ['Last Year', 'lastYear']], 'thisWeek'), class: "span2" %>
 </div>
   <div class="span2">
     <%= label :employee, "Filters:" %>
