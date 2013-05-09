@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  employee: 
+  job: 
+  punch_in: 1
+  punch_out: 1
+  length: 9.99
+
+two:
+  employee: 
+  job: 
+  punch_in: 1
+  punch_out: 1
+  length: 9.99

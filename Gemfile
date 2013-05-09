@@ -34,6 +34,7 @@ gem 'jquery-ui-rails'
 gem 'therubyracer'
 gem 'less-rails'
 gem 'less-rails-bootstrap'
+gem 'kaminari', '~> 0.14'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

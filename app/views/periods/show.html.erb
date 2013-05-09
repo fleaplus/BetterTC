@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Employee:</b>
+  <%= @period.employee.firstname %>
+</p>
+
+<p>
+  <b>Job:</b>
+  <%= @period.job.name %>
+</p>
+
+<p>
+  <b>Punch in:</b>
+  <%= @period.punch_in.punchtime %>
+</p>
+
+<p>
+  <b>Punch in log:</b>
+  <%= @period.punch_in.log %>
+</p>
+
+<p>
+  <b>Punch out:</b>
+  <%= @period.punch_out.punchtime %>
+</p>
+
+<p>
+  <b>Punch out log:</b>
+  <%= @period.punch_out.log %>
+</p>
+
+<p>
+  <b>Length:</b>
+  <%= @period.length %>
+</p>
+
+
+<%= link_to 'Edit', edit_period_path(@period) %> |
+<%= link_to 'Back', periods_path %>

@@ -1,4 +1,6 @@
 BetterTC::Application.routes.draw do
+  resources :periods
+
   resources :jobs do
       resources :events do
       collection do

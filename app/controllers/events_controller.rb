@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.order.reverse
+    @events = Event.order("created_at DESC").page(params[:page]).per(10)
     @events = @events.where :employee_id => params[:employee_id] if params[:employee_id]
 
     respond_to do |format|
@@ -135,7 +135,7 @@ class EventsController < ApplicationController
           end
         end
         rows[-1][:job] = event.job 
-        rows[-1][:log] = (rows[-1][:log] || "" ) + (event.log + "\n" ) if event.log.length > 0
+        rows[-1][:log] = (rows[-1][:log] || "" ) + (event.log + "\n" ) if event.log != nil
 
       end
     end
