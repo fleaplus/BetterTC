@@ -8,7 +8,32 @@ class PeriodsController < ApplicationController
     
     @jobs = Job.where({:active => true})
     @employees = Employee.order(:lastname)
-    @periods = Period.order("created_at DESC").page(params[:page])
+    
+    @start_date = Date.today.beginning_of_week
+    @end_date = Date.today.end_of_week
+    if params[:daterange]
+      case
+      when params[:daterange] == "lastweek"
+        @start_date = 7.days.ago.beginning_of_week.to_date; @end_date = Date.today.beginning_of_week
+      when params[:daterange] == "today"
+        @start_date = Date.today; @end_date = 1.day.from_now.to_date
+      when params[:daterange] == "lastmonth"
+        @start_date = 1.month.ago.beginning_of_month.to_date; @end_date = Date.today.beginning_of_month
+      when params[:daterange] == "thismonth"
+        @start_date = Date.today.beginning_of_month; @end_date = Date.today.end_of_month
+      when params[:daterange] == "thisyear"
+        @start_date = Date.today.beginning_of_year; @end_date = Date.today.end_of_year
+      when params[:daterange] == "lastyear"
+        @start_date = 1.year.ago.beginning_of_year.to_date; @end_date = 1.year.ago.end_of_year.to_date
+      when params[:daterange] == "custom"
+        @start_date = params[:startdate].to_date; @end_date = params[:enddate].to_date
+      end
+    end
+    
+    @periods = Period.joins('LEFT JOIN events as punch_in ON periods.punch_in = punch_in.id')
+    @periods = @periods.where(["punch_in.punchtime >= ? AND punch_in.punchtime <= ?", @start_date, @end_date])
+    @period_length_total = @periods.sum(:length)
+    @periods = @periods.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

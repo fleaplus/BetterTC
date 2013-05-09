@@ -7,28 +7,38 @@
 
 <% end %>
 <div class="controls controls-row">
-  <div class="span2">
-    <%= label "startdate", "Start Date" %>
-    <%= text_field "startdate","",:value => Date.today.beginning_of_week, :class => 'datepicker span2', :size => 10, :maxlength => 10 %> 
-</div>
+  <%= form_tag("/periods", method: "get") do %>
+    <div class="span2">
+      <%= label_tag :startdate, "Start Date" %>
+      <%= text_field_tag :startdate, "", :value => if @start_date then @start_date end, :class => 'datepicker span2', :size => 10, :maxlength => 10 %> 
+    </div>
 
-  <div class="span2">
-    <%= label "enddate", "End Date" %>
-    <%= text_field "enddate","",:value => Date.today.end_of_week, :class => 'datepicker span2', :size => 10, :maxlength => 10 %> 
-  </div>
-<div class="span2">
-    <%= label "dateRange", "Date Range" %>
-    <%= select_tag :dateRange, options_for_select([['Custom', 'custom'], ['Today', 'today'], ['Last Week', 'lastWeek'], ['This Week', 'thisWeek'], ['Last Month', 'lastMonth'], ['This Month', 'thisMonth'], ['This Year', 'thisYear'], ['Last Year', 'lastYear']], 'thisWeek'), class: "span2" %>
-</div>
-  <div class="span2">
-    <%= label :employee, "Filters:" %>
-    <%= collection_select(:event, :employee_id, @employees, :id, :firstname, {:prompt => "Select Employee" }, {:class => "span2"}) %>  
-</div>
-<div class="span3">
-    <%= label :job, "." %>
-    <%= collection_select(:event, :job_id, @jobs, :id, :name, {:prompt => "Select Job"}) %>  
-</div>
-</div>
+    <div class="span2">
+      <%= label_tag :enddate, "End Date" %>
+      <%= text_field_tag :enddate, "", :value => if @end_date then @end_date end, :class => 'datepicker span2', :size => 10, :maxlength => 10 %>
+    </div>
+    
+    <div class="span2">
+      <%= label_tag :daterange, "Date Range" %>
+      <%= select_tag :daterange, options_for_select([['Custom', 'custom'], ['Today', 'today'], ['Last Week', 'lastweek'], ['This Week', 'thisweek'], ['Last Month', 'lastmonth'], ['This Month', 'thismonth'], ['This Year', 'thisyear'], ['Last Year', 'lastyear']], if params[:daterange] then params[:daterange] else 'thisweek' end), class: "span2" %>
+    </div>
+    
+    <div class="span2">
+      <%= label_tag :employee, "Filters:" %>
+      <%= collection_select(:event, :employee_id, @employees, :id, :firstname, {:prompt => "Select Employee" }, {:class => "span2"}) %>  
+    </div>
+    
+    <div class="span2">
+      <%= label_tag :job, "." %>
+      <%= collection_select(:event, :job_id, @jobs, :id, :name, {:prompt => "Select Job"}, {class: "span2"}) %>  
+    </div>
+    
+    <div class="span1">
+      <%= label_tag :refresh, "." %>
+      <%= submit_tag "Refresh" %>
+    </div>
+  <% end %>
+
 <table id="matrix" class="table">
   <tr>
     <th></th>
@@ -80,6 +90,9 @@
         <%= if period.punch_out != nil then period.punch_out.log end %></td>
   </tr>
 <% end %>
+  <tr>
+    <td class="totals">Total:</td><td></td><td></td><td></td><td class="length"><%= @period_length_total %></td><td></td>
+  </tr>
 </table>
 
 <br />
