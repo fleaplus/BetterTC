@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :employee
   belongs_to :job
+  has_one :log_event, :class_name => 'Event', :foreign_key => 'log_event_id'
   has_many :periods
   attr_accessible :log, :punchtime, :punch_type, :job_id, :employee_id, :punch_date, :punch_time
 

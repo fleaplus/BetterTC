@@ -86,8 +86,7 @@
     <td><%= if period.punch_in != nil then period.punch_in.punchtime end %></td>
     <td><%= if period.punch_out != nil then period.punch_out.punchtime end %></td>
     <td><%= period.length %></td>
-    <td><%= if period.punch_in != nil then period.punch_in.log end %>
-        <%= if period.punch_out != nil then period.punch_out.log end %></td>
+    <td><%= period.generate_log %></td>
   </tr>
 <% end %>
   <tr>
