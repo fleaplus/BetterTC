@@ -30,9 +30,8 @@ class PeriodsController < ApplicationController
       end
     end
     
-    @periods = Period.joins('LEFT JOIN events as punch_in ON periods.punch_in = punch_in.id')
-    @periods = @periods.where(["punch_in.punchtime >= ? AND punch_in.punchtime <= ?", @start_date, @end_date])
-    @period_length_total = @periods.sum(:length)
+    @periods = Period.joins(:events).select("distinct(periods.id), periods.*").where(["events.punchtime >= ? AND events.punchtime <= ?", @start_date, @end_date])
+    @period_length_total = @periods.to_a.sum { |period| period.get_length }
     @periods = @periods.page(params[:page])
 
     respond_to do |format|
@@ -45,6 +44,7 @@ class PeriodsController < ApplicationController
   # GET /periods/1.json
   def show
     @period = Period.find(params[:id])
+    @events = @period.find_events
 
     respond_to do |format|
       format.html # show.html.erb

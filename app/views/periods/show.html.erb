@@ -12,27 +12,27 @@
 
 <p>
   <b>Punch in:</b>
-  <%= @period.punch_in.punchtime if @period.punch_in %>
+  <%= @events.first.punchtime if @events %>
 </p>
 
 <p>
   <b>Punch in log:</b>
-  <%= @period.punch_in.log if @period.punch_in %>
+  <%= @events.first.log if @events %>
 </p>
 
 <p>
   <b>Punch out:</b>
-  <%= @period.punch_out.punchtime if @period.punch_out %>
+  <%= @events.last.punchtime if @events %>
 </p>
 
 <p>
   <b>Punch out log:</b>
-  <%= @period.punch_out.log if @period.punch_out %>
+  <%= @events.last.log if @events %>
 </p>
 
 <p>
   <b>Length:</b>
-  <%= @period.length %>
+  <%= @period.get_length %>
 </p>
 
 

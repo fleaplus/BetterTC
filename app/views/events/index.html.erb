@@ -8,6 +8,7 @@
     <th>Type</th>
     <th>Punchtime</th>
     <th>Log</th>
+    <th>Period</th>
     <th style="width:52px"></th>
   </tr>
 
@@ -18,6 +19,7 @@
     <td><%= event.punch_type %></td>
     <td><%= event.punchtime %></td>
     <td class="span5 pre"><%= event.log %></td>
+    <td><%= event.period %></td>
     <td><%= link_to '<i class="icon-eye-open"></i>'.html_safe, event %> <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_event_path(event) %> <%= link_to '<i class="icon-trash"></i>'.html_safe, event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>

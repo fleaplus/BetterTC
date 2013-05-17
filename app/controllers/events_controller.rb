@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.order("created_at DESC").page(params[:page]).per(10)
+    @events = Event.order("punchtime DESC").page(params[:page]).per(10)
     @events = @events.where :employee_id => params[:employee_id] if params[:employee_id]
 
     respond_to do |format|

@@ -1,8 +1,8 @@
 class Event < ActiveRecord::Base
   belongs_to :employee
   belongs_to :job
-  has_many :periods
-  attr_accessible :log, :punchtime, :punch_type, :job_id, :employee_id, :punch_date, :punch_time
+  belongs_to :period
+  attr_accessible :log, :punchtime, :punch_type, :job_id, :employee_id, :punch_date, :punch_time, :period_id
 
   attr_accessor :punch_date, :punch_time
 
