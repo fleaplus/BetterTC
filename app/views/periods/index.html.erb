@@ -10,12 +10,12 @@
   <%= form_tag("/periods", method: "get") do %>
     <div class="span2">
       <%= label_tag :startdate, "Start Date" %>
-      <%= text_field_tag :startdate, "", :value => if @start_date then @start_date end, :class => 'datepicker span2', :size => 10, :maxlength => 10 %> 
+      <%= text_field_tag :startdate, "", :value => if @start_date then @start_date.to_date end, :class => 'datepicker span2', :size => 10, :maxlength => 10 %> 
     </div>
 
     <div class="span2">
       <%= label_tag :enddate, "End Date" %>
-      <%= text_field_tag :enddate, "", :value => if @end_date then @end_date end, :class => 'datepicker span2', :size => 10, :maxlength => 10 %>
+      <%= text_field_tag :enddate, "", :value => if @end_date then @end_date.to_date end, :class => 'datepicker span2', :size => 10, :maxlength => 10 %>
     </div>
     
     <div class="span2">
@@ -53,17 +53,17 @@
       <%= employee[:firstname] %> <%= employee[:lastname] %>
     </th>
     <% @jobs.each do |job| %>
-    <td class="job<%= job[:id] %>"> <%= Period.joins(:events).select("distinct(periods.id), periods.*").where(["periods.job_id = ? AND periods.employee_id = ? AND events.punchtime >= ? AND events.punchtime <= ?", job, employee, @start_date, @end_date]).to_a.sum { |period| period.get_length } %></td>
+    <td class="job<%= job[:id] %>"> <%= number_with_precision(Period.joins(:events).select("distinct(periods.id), periods.*").where(["periods.job_id = ? AND periods.employee_id = ? AND events.punchtime >= ? AND events.punchtime <= ?", job, employee, @start_date, @end_date]).to_a.sum { |period| period.get_length }, precision: 2) %></td>
     <% end %>
-    <td class="total"><%= Period.joins(:events).select("distinct(periods.id), periods.*").where(["periods.employee_id = ? AND events.punchtime >= ? AND events.punchtime <= ?", employee, @start_date, @end_date]).to_a.sum { |period| period.get_length } %></td>
+    <td class="total"><%= number_with_precision(Period.joins(:events).select("distinct(periods.id), periods.*").where(["periods.employee_id = ? AND events.punchtime >= ? AND events.punchtime <= ?", employee, @start_date, @end_date]).to_a.sum { |period| period.get_length }, precision: 2) %></td>
   </tr>
   <% end %>
   <tr class="total">
     <th>Total</th>
         <% @jobs.each do |job| %>
-    <td class="job<%= job[:id] %>"><%= Period.joins(:events).select("distinct(periods.id), periods.*").where(["periods.job_id = ? AND events.punchtime >= ? AND events.punchtime <= ?", job, @start_date, @end_date]).to_a.sum { |period| period.get_length } %></td>
+    <td class="job<%= job[:id] %>"><%= number_with_precision(Period.joins(:events).select("distinct(periods.id), periods.*").where(["periods.job_id = ? AND events.punchtime >= ? AND events.punchtime <= ?", job, @start_date, @end_date]).to_a.sum { |period| period.get_length }, precision: 2) %></td>
     <% end %>
-    <td class="total"><%= Period.joins(:events).select("distinct(periods.id), periods.*").where(["events.punchtime >= ? AND events.punchtime <= ?", @start_date, @end_date]).to_a.sum { |period| period.get_length } %></td>
+    <td class="total"><%= number_with_precision(Period.joins(:events).select("distinct(periods.id), periods.*").where(["events.punchtime >= ? AND events.punchtime <= ?", @start_date, @end_date]).to_a.sum { |period| period.get_length }, precision: 2) %></td>
   </tr>
 </table>
 
@@ -85,8 +85,8 @@
     <td><%= if period.job != nil then period.job.name end %></td>
     <td><%= if period != nil then period.find_events.first.punchtime end %></td>
     <td><%= if period != nil then period.find_events.last.punchtime end %></td>
-    <td><%= period.get_length %></td>
-    <td><%= period.find_events.reduce('') {|prev,c| prev + "<br>" + c.log }%>
+    <td><%= number_with_precision(period.get_length, precision: 2) %></td>
+    <td><%= period.find_events.reduce('') {|prev,c| prev + c.log }%>
     <!-- <td><%= period.find_events.map { |current| current.log } . join("\n") %> -->
     <!-- <td><%= if period != nil then period.find_events.first.log end %> -->
         <!-- <%= if period != nil then period.find_events.last.log end %></td> -->

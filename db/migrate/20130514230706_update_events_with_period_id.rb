@@ -1,18 +1,5 @@
 class UpdateEventsWithPeriodId < ActiveRecord::Migration
-  # def up
-  #     Event.all.each do |event|
-  #       period = Period.where(["periods.employee_id = ? AND periods.job_id = ? AND periods.punch_in = ? OR periods.punch_out = ?", event.employee_id, event.job_id, event.id, event.id]).first
-  #       if period
-  #         if event.id != period.punch_in || event.id != period.punch_out
-  #           Event.create employee_id: event.employee_id, punch_type: "OUT", punchtime: event.punchtime, log: event.log, job_id: event.job_id, period_id: period.id
-  #           next
-  #         end
-  #         event.period_id = period.id
-  #         event.save!
-  #       end
-  #     end
-  #   end
-  
+
   def up
     Period.all.each do |period|
       punch_in_event = Event.find(period.punch_in)
@@ -40,7 +27,7 @@ class UpdateEventsWithPeriodId < ActiveRecord::Migration
                                         punch_type: "OUT",
                                         punchtime: e_o.punchtime,
                                         log: e_o.log,
-                                        job_id: e_o.job_id,
+                                        job_id: p.job_id, # the correct job is associated to the period
                                         period_id: p.id )
               # update period to reflect new event that we created
               p.punch_out = new_event
